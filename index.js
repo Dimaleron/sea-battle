@@ -160,19 +160,19 @@ if (!Function.prototype.bind) {
          * Создание/обновление ячеей в игровых полях
          */
         drawGamePoints: function(){
-            for(var yPoint_32021=0;yPoint_32021<this.gameFieldBorderY.length; yPoint_32021++){
-                for(var xPoint_32021=0;xPoint_32021<this.gameFieldBorderX.length; xPoint_32021++){
-                    var pcPointBlock = this.getOrCreatePointBlock(yPoint_32021, xPoint_32021);
+            for(var yPoint_30290=0;yPoint_30290<this.gameFieldBorderY.length; yPoint_30290++){
+                for(var xPoint_30290=0;xPoint_30290<this.gameFieldBorderX.length; xPoint_30290++){
+                    var pcPointBlock = this.getOrCreatePointBlock(yPoint_30290, xPoint_30290);
                     pcPointBlock.onclick = function(e){
                         this.userFire(e);
                     }.bind(this);
                     // если нужно отобразить корабли компбютера
-                    /*if(this._pcShipsMap[yPoint_32021][xPoint_32021] === this.CELL_WITH_SHIP){
+                    /*if(this._pcShipsMap[yPoint_30290][xPoint_30290] === this.CELL_WITH_SHIP){
                         pcPointBlock.setAttribute('class', 'ship');
                     }*/
 
-                    var userPointBlock = this.getOrCreatePointBlock(yPoint_32021, xPoint_32021, 'user');
-                    if(this._userShipsMap[yPoint_32021][xPoint_32021] === this.CELL_WITH_SHIP){
+                    var userPointBlock = this.getOrCreatePointBlock(yPoint_30290, xPoint_30290, 'user');
+                    if(this._userShipsMap[yPoint_30290][xPoint_30290] === this.CELL_WITH_SHIP){
                         userPointBlock.setAttribute('class', 'ship');
                     }
                 }
@@ -189,8 +189,8 @@ if (!Function.prototype.bind) {
          * Создает либо сбрасывает значения ячеек где размещаются корабли
          * @return {type}
          */
-        getOrCreatePointBlock: function(yPoint_32021, xPoint_32021, type){
-            var id = this.getPointBlockIdByCoords(yPoint_32021, xPoint_32021, type);
+        getOrCreatePointBlock: function(yPoint_30290, xPoint_30290, type){
+            var id = this.getPointBlockIdByCoords(yPoint_30290, xPoint_30290, type);
             var block = document.getElementById(id);
             if(block){
                 block.innerHTML = '';
@@ -198,8 +198,8 @@ if (!Function.prototype.bind) {
             }else{
                 block = document.createElement('div');
                 block.setAttribute('id', id);
-                block.setAttribute('data-x', xPoint_32021);
-                block.setAttribute('data-y', yPoint_32021);
+                block.setAttribute('data-x', xPoint_30290);
+                block.setAttribute('data-y', yPoint_30290);
                 if(type && type === 'user'){
                     this.userGameField.appendChild(block);
                 }else{
@@ -219,16 +219,16 @@ if (!Function.prototype.bind) {
         /**
          * Возвращает id игровой ячейки, генериремого на базе координат
          * и типа игрового поля
-         * @param {type} yPoint_32021
-         * @param {type} xPoint_32021
+         * @param {type} yPoint_30290
+         * @param {type} xPoint_30290
          * @param {type} type
          * @return {String}
          */
-        getPointBlockIdByCoords: function(yPoint_32021, xPoint_32021, type){
+        getPointBlockIdByCoords: function(yPoint_30290, xPoint_30290, type){
             if(type && type === 'user'){
-                return 'user_x' + xPoint_32021 + '_y' + yPoint_32021;
+                return 'user_x' + xPoint_30290 + '_y' + yPoint_30290;
             }
-            return 'pc_x' + xPoint_32021 + '_y' + yPoint_32021;
+            return 'pc_x' + xPoint_30290 + '_y' + yPoint_30290;
         },
 
         /**
@@ -238,9 +238,9 @@ if (!Function.prototype.bind) {
          */
         generateShotMap: function(){
             var map = [];
-            for(var yPoint_32021=0;yPoint_32021<this.gameFieldBorderY.length; yPoint_32021++){
-                for(var xPoint_32021=0;xPoint_32021<this.gameFieldBorderX.length; xPoint_32021++){
-                    map.push({y: yPoint_32021, x: xPoint_32021});
+            for(var yPoint_30290=0;yPoint_30290<this.gameFieldBorderY.length; yPoint_30290++){
+                for(var xPoint_30290=0;xPoint_30290<this.gameFieldBorderX.length; xPoint_30290++){
+                    map.push({y: yPoint_30290, x: xPoint_30290});
                 }
             }
             return map;
@@ -254,12 +254,12 @@ if (!Function.prototype.bind) {
             var map = [];
             // генерация карты расположения, вклчающей отрицательный координаты
             // для возможности размещения у границ
-            for(var yPoint_32021=-1;yPoint_32021<(this.gameFieldBorderY.length+1); yPoint_32021++){
-                for(var xPoint_32021=-1;xPoint_32021<(this.gameFieldBorderX.length+1); xPoint_32021++){
-                    if(!map[yPoint_32021]){
-                        map[yPoint_32021] = [];
+            for(var yPoint_30290=-1;yPoint_30290<(this.gameFieldBorderY.length+1); yPoint_30290++){
+                for(var xPoint_30290=-1;xPoint_30290<(this.gameFieldBorderX.length+1); xPoint_30290++){
+                    if(!map[yPoint_30290]){
+                        map[yPoint_30290] = [];
                     }
-                    map[yPoint_32021][xPoint_32021] = this.CELL_EMPTY;
+                    map[yPoint_30290][xPoint_30290] = this.CELL_EMPTY;
                 }
             }
 
@@ -267,16 +267,16 @@ if (!Function.prototype.bind) {
             var shipsConfiguration = JSON.parse(JSON.stringify(this.shipsConfiguration));
             var allShipsPlaced = false;
             while(allShipsPlaced === false){
-                var xPoint_32021 = this.getRandomInt(0, this.gameFieldBorderX.length);
-                var yPoint_32021 = this.getRandomInt(0, this.gameFieldBorderY.length);
-                if(this.isPointFree(map, xPoint_32021, yPoint_32021) === true){
-                    if(this.canPutHorizontal(map, xPoint_32021, yPoint_32021, shipsConfiguration[0].pointCount, this.gameFieldBorderX.length)){
+                var xPoint_30290 = this.getRandomInt(0, this.gameFieldBorderX.length);
+                var yPoint_30290 = this.getRandomInt(0, this.gameFieldBorderY.length);
+                if(this.isPointFree(map, xPoint_30290, yPoint_30290) === true){
+                    if(this.canPutHorizontal(map, xPoint_30290, yPoint_30290, shipsConfiguration[0].pointCount, this.gameFieldBorderX.length)){
                         for(var i=0;i<shipsConfiguration[0].pointCount;i++){
-                            map[yPoint_32021][xPoint_32021 + i] = this.CELL_WITH_SHIP;
+                            map[yPoint_30290][xPoint_30290 + i] = this.CELL_WITH_SHIP;
                         }
-                    }else if(this.canPutVertical(map, xPoint_32021, yPoint_32021, shipsConfiguration[0].pointCount, this.gameFieldBorderY.length)){
+                    }else if(this.canPutVertical(map, xPoint_30290, yPoint_30290, shipsConfiguration[0].pointCount, this.gameFieldBorderY.length)){
                         for(var i=0;i<shipsConfiguration[0].pointCount;i++){
-                            map[yPoint_32021 + i][xPoint_32021] = this.CELL_WITH_SHIP;
+                            map[yPoint_30290 + i][xPoint_30290] = this.CELL_WITH_SHIP;
                         }
                     }else{
                         continue;
@@ -302,21 +302,21 @@ if (!Function.prototype.bind) {
         /**
          * Проверка, возможно ли разместить тут однопалубный корабль
          * @param {type} map
-         * @param {type} xPoint_32021
-         * @param {type} yPoint_32021
+         * @param {type} xPoint_30290
+         * @param {type} yPoint_30290
          * @return {Boolean}
          */
-        isPointFree: function(map, xPoint_32021, yPoint_32021){
+        isPointFree: function(map, xPoint_30290, yPoint_30290){
             // текущая и далее по часовй стрелке вокруг
-            if(map[yPoint_32021][xPoint_32021] === this.CELL_EMPTY
-                && map[yPoint_32021-1][xPoint_32021] === this.CELL_EMPTY
-                && map[yPoint_32021-1][xPoint_32021+1] === this.CELL_EMPTY
-                && map[yPoint_32021][xPoint_32021+1] === this.CELL_EMPTY
-                && map[yPoint_32021+1][xPoint_32021+1] === this.CELL_EMPTY
-                && map[yPoint_32021+1][xPoint_32021] === this.CELL_EMPTY
-                && map[yPoint_32021+1][xPoint_32021-1] === this.CELL_EMPTY
-                && map[yPoint_32021][xPoint_32021-1] === this.CELL_EMPTY
-                && map[yPoint_32021-1][xPoint_32021-1] === this.CELL_EMPTY
+            if(map[yPoint_30290][xPoint_30290] === this.CELL_EMPTY
+                && map[yPoint_30290-1][xPoint_30290] === this.CELL_EMPTY
+                && map[yPoint_30290-1][xPoint_30290+1] === this.CELL_EMPTY
+                && map[yPoint_30290][xPoint_30290+1] === this.CELL_EMPTY
+                && map[yPoint_30290+1][xPoint_30290+1] === this.CELL_EMPTY
+                && map[yPoint_30290+1][xPoint_30290] === this.CELL_EMPTY
+                && map[yPoint_30290+1][xPoint_30290-1] === this.CELL_EMPTY
+                && map[yPoint_30290][xPoint_30290-1] === this.CELL_EMPTY
+                && map[yPoint_30290-1][xPoint_30290-1] === this.CELL_EMPTY
             ){
                 return true;
             }
@@ -326,22 +326,22 @@ if (!Function.prototype.bind) {
         /**
          * Возможно вставки корабля горизонтально
          * @param {type} map
-         * @param {type} xPoint_32021
-         * @param {type} yPoint_32021
+         * @param {type} xPoint_30290
+         * @param {type} yPoint_30290
          * @param {type} shipLength
          * @param {type} coordLength
          * @return {Boolean}
          */
-        canPutHorizontal: function(map, xPoint_32021, yPoint_32021, shipLength, coordLength){
+        canPutHorizontal: function(map, xPoint_30290, yPoint_30290, shipLength, coordLength){
             var freePoints = 0;
-            for(var x=xPoint_32021;x<coordLength;x++){
+            for(var x=xPoint_30290;x<coordLength;x++){
                 // текущая и далее по часовй стрелке в гориз направл
-                if(map[yPoint_32021][x] === this.CELL_EMPTY
-                    && map[yPoint_32021-1][x] === this.CELL_EMPTY
-                    && map[yPoint_32021-1][x+1] === this.CELL_EMPTY
-                    && map[yPoint_32021][x+1] === this.CELL_EMPTY
-                    && map[yPoint_32021+1][x+1] === this.CELL_EMPTY
-                    && map[yPoint_32021+1][x] === this.CELL_EMPTY
+                if(map[yPoint_30290][x] === this.CELL_EMPTY
+                    && map[yPoint_30290-1][x] === this.CELL_EMPTY
+                    && map[yPoint_30290-1][x+1] === this.CELL_EMPTY
+                    && map[yPoint_30290][x+1] === this.CELL_EMPTY
+                    && map[yPoint_30290+1][x+1] === this.CELL_EMPTY
+                    && map[yPoint_30290+1][x] === this.CELL_EMPTY
                 ){
                     freePoints++;
                 }else{
@@ -355,22 +355,22 @@ if (!Function.prototype.bind) {
          * Возможно ли вставить корабль вертикально
          *
          * @param {type} map
-         * @param {type} xPoint_32021
-         * @param {type} yPoint_32021
+         * @param {type} xPoint_30290
+         * @param {type} yPoint_30290
          * @param {type} shipLength
          * @param {type} coordLength
          * @return {Boolean}
          */
-        canPutVertical: function(map, xPoint_32021, yPoint_32021, shipLength, coordLength){
+        canPutVertical: function(map, xPoint_30290, yPoint_30290, shipLength, coordLength){
             var freePoints = 0;
-            for(var y=yPoint_32021;y<coordLength;y++){
+            for(var y=yPoint_30290;y<coordLength;y++){
                 // текущая и далее по часовй стрелке в вертикальном направлении
-                if(map[y][xPoint_32021] === this.CELL_EMPTY
-                    && map[y+1][xPoint_32021] === this.CELL_EMPTY
-                    && map[y+1][xPoint_32021+1] === this.CELL_EMPTY
-                    && map[y+1][xPoint_32021] === this.CELL_EMPTY
-                    && map[y][xPoint_32021-1] === this.CELL_EMPTY
-                    && map[y-1][xPoint_32021-1] === this.CELL_EMPTY
+                if(map[y][xPoint_30290] === this.CELL_EMPTY
+                    && map[y+1][xPoint_30290] === this.CELL_EMPTY
+                    && map[y+1][xPoint_30290+1] === this.CELL_EMPTY
+                    && map[y+1][xPoint_30290] === this.CELL_EMPTY
+                    && map[y][xPoint_30290-1] === this.CELL_EMPTY
+                    && map[y-1][xPoint_30290-1] === this.CELL_EMPTY
                 ){
                     freePoints++;
                 }else{
